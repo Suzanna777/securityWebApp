@@ -1,0 +1,15 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: your-google-client-id
+            clientSecret: your-google-client-secret
+            redirectUri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid,profile,email
+          facebook:
+            clientId: your-facebook-client-id
+            clientSecret: your-facebook-client-secret
+            redirectUri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid,profile,email

@@ -1,0 +1,10 @@
+# Enable secure cookies
+server.servlet.session.cookie.secure=true
+
+# Enable HTTP-only cookies
+server.servlet.session.cookie.http-only=true
+
+# Set cookie expiration time (e.g., 30 minutes)
+server.servlet.session.cookie.max-age=1800
+# Set session timeout to 10 minutes
+server.servlet.session.timeout=600
