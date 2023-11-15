@@ -1,25 +1,29 @@
 package com.yourcompany.config;
 
 
+import com.yourcompany.filter.CustomFilter;
 import org.springframework.context.annotation.Bean;
-
-@Configuration
-@EnableWebSecurity
-import org.springframework.context.annotation.Bean;
-        import org.springframework.context.annotation.Configuration;
-        import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-        import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-        import org.springframework.security.core.session.SessionRegistry;
-        import org.springframework.security.core.session.SessionRegistryImpl;
-        import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final CustomFilter customFilter;
+
+    public SecurityConfig(CustomFilter customFilter) {
+        this.customFilter = customFilter;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/public/**").permitAll()
                 .anyRequest().authenticated()
@@ -31,15 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll()
                 .and()
-                .addFilterBefore(customFilter(), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement()
                 .maximumSessions(1)
                 .sessionRegistry(sessionRegistry());
-    }
-
-    @Bean
-    public CustomFilter customFilter() {
-        return new CustomFilter();
     }
 
     @Bean

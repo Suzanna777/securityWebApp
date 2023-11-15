@@ -1,8 +1,7 @@
 package com.yourcompany.model;
 
-import com.yourcompany.service.security.PasswordHasher;
+import com.yourcompany.service.PasswordHasher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
